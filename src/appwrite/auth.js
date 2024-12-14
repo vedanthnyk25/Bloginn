@@ -55,6 +55,5 @@ import conf from '../conf/conf.js'
 
 }
 
-export const authService= new AuthService()
-
+export const  authService= new AuthService()
 
