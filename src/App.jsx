@@ -1,52 +1,38 @@
-
-import { useState } from 'react'
-import './App.css'
+import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { useEffect } from 'react'
-import {authService} from './appwrite/auth.js'
-import {login, logout} from './store/authSlice'
-import {Header, Footer} from './components/index.js'
+import './App.css'
+import authService from "./appwrite/auth"
+import {login, logout} from "./store/authSlice"
+import { Footer, Header } from './components'
+import { Outlet } from 'react-router-dom'
+
 function App() {
-  const [loading, setLoading]= useState(true)
-  const dispatch= useDispatch()
+  const [loading, setLoading] = useState(true)
+  const dispatch = useDispatch()
 
-  useEffect(()=>{
-     authService.getCurrentUser()
-     .then((userData)=>{
-      if (userData){
+  useEffect(() => {
+    authService.getCurrentUser()
+    .then((userData) => {
+      if (userData) {
         dispatch(login({userData}))
-      }else 
-      dispatch(logout())
-     })
-     .finally(()=> setLoading(false))
-
-  },[])
-
-  return !loading?(
-    <div className='min-h-screen flex flex-wrap
-    content-between bg-gray-500'>
+      } else {
+        dispatch(logout())
+      }
+    })
+    .finally(() => setLoading(false))
+  }, [])
+  
+  return !loading ? (
+    <div className='min-h-screen flex flex-wrap content-between bg-gray-400'>
       <div className='w-full block'>
-        <Header/>
+        <Header />
         <main>
-          {/*<Outlet/>*/}
+        <Outlet />
         </main>
-        <Footer/>
+        <Footer />
       </div>
     </div>
-  ):(
-    <div className="min-h-screen flex justify-center items-center bg-gray-800">
-      <div
-        className="w-12 h-12 border-4 border-t-transparent border-blue-500 rounded-full animate-spin"
-        aria-label="Loading..."
-      ></div>
-    </div>
-  );
-
-  return (
-    <>
-      <h1>Let's Start our first mega Project!</h1>
-    </>
-  )
+  ) : null
 }
 
 export default App
