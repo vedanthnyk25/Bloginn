@@ -1,46 +1,62 @@
-import React from 'react'
-import {Editor } from '@tinymce/tinymce-react';
-import {Controller } from 'react-hook-form';
-import conf from '../conf/conf';
+import React, { useEffect, useRef } from 'react';
+import { Controller } from 'react-hook-form';
+import 'quill/dist/quill.snow.css'; // Import Quill styles
+import Quill from 'quill';
 
+export default function RTE({ name, control, label, defaultValue = '' }) {
+  const quillRef = useRef(null);
+  const editorRef = useRef(null); // To store the Quill instance
 
-export default function RTE({name, control, label, defaultValue =""}) {
-return (
-    <div className='w-full'> 
-    {label && <label className='inline-block mb-1 pl-1'>{label}</label>}
+  useEffect(() => {
+    // Initialize Quill editor only once
+    if (!editorRef.current && quillRef.current) {
+      editorRef.current = new Quill(quillRef.current, {
+        theme: 'snow',
+        modules: {
+          toolbar: [
+            [{ header: [1, 2, false] }],
+            ['bold', 'italic', 'underline', 'strike'],
+            [{ list: 'ordered' }, { list: 'bullet' }],
+            ['link', 'image'],
+            ['clean'],
+          ],
+        },
+        placeholder: 'Write something awesome...',
+      });
+    }
+  }, []);
 
-    <Controller
-    name={name || "content"}
-    control={control}
-    render={({ field: { onChange, value } }) => (
-        <Editor
-            apiKey= {conf.tinyMceRteAPIkey}
-            initialValue={defaultValue}
-            value={value}
-            init={{
-                height: 500,
-                menubar: true,
-                plugins: [
-                    'advlist autolink lists link image charmap print preview anchor',
-                    'searchreplace visualblocks code fullscreen',
-                    'insertdatetime media table paste code help wordcount',
-                ],
-                toolbar:
-                    'undo redo | formatselect | ' +
-                    'bold italic backcolor | alignleft aligncenter ' +
-                    'alignright alignjustify | bullist numlist outdent indent | ' +
-                    'removeformat | help',
-                content_style:
-                    'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
-            }}
-            onEditorChange={onChange} // Ensure this is linked properly
-        />
-    )}
-/>
+  return (
+    <div className="w-full">
+      {label && <label className="inline-block mb-1 pl-1">{label}</label>}
 
+      <Controller
+        name={name || 'content'}
+        control={control}
+        defaultValue={defaultValue}
+        render={({ field: { onChange, value } }) => {
+          // Update Quill content when value changes externally
+          useEffect(() => {
+            if (editorRef.current && value !== editorRef.current.root.innerHTML) {
+              editorRef.current.root.innerHTML = value || '';
+            }
+          }, [value]);
 
+          // Attach Quill change handler
+          useEffect(() => {
+            if (editorRef.current) {
+              const quill = editorRef.current;
+              const handleChange = () => {
+                onChange(quill.root.innerHTML);
+              };
+              quill.on('text-change', handleChange);
+              return () => quill.off('text-change', handleChange);
+            }
+          }, [onChange]);
+
+          return <div ref={quillRef} style={{ height: '300px', marginBottom: '20px' }} />;
+        }}
+      />
     </div>
-)
+  );
 }
-
-
