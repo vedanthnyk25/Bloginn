@@ -27,7 +27,7 @@ export default function RTE({ name, control, label, defaultValue = '' }) {
   }, []);
 
   return (
-    <div className="w-full">
+    <div className="w-full bg-slate-200">
       {label && <label className="inline-block mb-1 pl-1">{label}</label>}
 
       <Controller
@@ -54,7 +54,7 @@ export default function RTE({ name, control, label, defaultValue = '' }) {
             }
           }, [onChange]);
 
-          return <div ref={quillRef} style={{ height: '300px', marginBottom: '20px' }} />;
+          return <div ref={quillRef} style={{ height: '500px' }} />;
         }}
       />
     </div>

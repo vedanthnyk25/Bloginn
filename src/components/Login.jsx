@@ -32,7 +32,7 @@ function Login() {
 
 return (
     <div
-    className='flex items-center justify-center w-full'
+    className='flex items-center py-20 justify-center w-full'
     >
         <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
         <div className="mb-2 flex justify-center">
@@ -55,6 +55,7 @@ return (
             <div className='space-y-5'>
             <Input
             label= "Email: "
+            className="ml-16"
             placeholder= "Enter your email"
             type= "email"
             {...register("email", {
@@ -66,7 +67,8 @@ return (
             })}
             />
             <Input
-            label="password: "
+            label="Password: "
+            className='ml-10'
             type="password"
             placeholder="Enter your password"
             {...register("password",{
@@ -80,7 +82,7 @@ return (
             </div>
             <Button
                 type="submit"
-                className="w-full"
+                className="w-full mt-8"
                 >Sign in</Button>
         </form>
         </div>

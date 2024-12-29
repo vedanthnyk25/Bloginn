@@ -19,7 +19,7 @@ function Home() {
                 <Container>
                     <div className="flex flex-wrap">
                         <div className="p-2 w-full">
-                            <h1 className="text-2xl font-bold hover:text-gray-500">
+                            <h1 className="text-2xl text-zinc-500 font-sans font-bold hover:text-gray-500">
                                 Login to read posts
                             </h1>
                         </div>
@@ -29,7 +29,7 @@ function Home() {
         )
     }
     return (
-        <div className='w-full py-8'>
+        <div className='w-full py-8 bg-gray-900'>
             <Container>
                 <div className='flex flex-wrap'>
                     {posts.map((post) => (

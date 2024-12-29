@@ -31,7 +31,9 @@ function Signup() {
             <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
             <div className="mb-2 flex justify-center">
                     <span className="inline-block w-full max-w-[100px]">
-                        <Logo width="100%" />
+                    <div className="text-3xl font-semibold text-indigo-600 hover:text-indigo-800 transition duration-300">
+    Bloginn
+    </div>
                     </span>
                 </div>
                 <h2 className="text-center text-2xl font-bold leading-tight">Sign up to create account</h2>
@@ -39,7 +41,7 @@ function Signup() {
                     Already have an account?&nbsp;
                     <Link
                         to="/login"
-                        className="font-medium text-primary transition-all duration-200 hover:underline"
+                        className="font-medium  text-primary transition-all duration-200 hover:underline"
                     >
                         Sign In
                     </Link>

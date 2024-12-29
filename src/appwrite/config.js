@@ -129,9 +129,9 @@ export class Service{
         try {
             const previewUrl = await this.bucket.getFilePreview(
                 conf.appwriteBucketId,
-                fileId
+                fileId,
             );
-           
+            console.log(previewUrl)
             return previewUrl;
         } catch (error) {
             console.error("Error fetching file preview:", error);
