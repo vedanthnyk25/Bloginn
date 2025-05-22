@@ -34,18 +34,18 @@ return (
     <div
     className='flex items-center py-20 justify-center w-full'
     >
-        <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
+        <div className={`mx-auto w-full max-w-lg bg-white dark:bg-gray-800 rounded-xl p-10 border border-gray-200 dark:border-gray-700 shadow-lg transition-all duration-300`}>
         <div className="mb-2 flex justify-center">
                     <span className="inline-block w-full max-w-[100px]">
                         <Logo width="100%" />
                     </span>
         </div>
-        <h2 className="text-center text-2xl font-bold leading-tight">Sign in to your account</h2>
-        <p className="mt-2 text-center text-base text-black/60">
+        <h2 className="text-center text-2xl font-bold leading-tight text-gray-900 dark:text-white">Sign in to your account</h2>
+        <p className="mt-2 text-center text-base text-gray-600 dark:text-gray-400">
                     Don&apos;t have any account?&nbsp;
                     <Link
                         to="/signup"
-                        className="font-medium text-primary transition-all duration-200 hover:underline"
+                        className="font-medium text-indigo-600 dark:text-indigo-400 transition-all duration-200 hover:underline"
                     >
                         Sign Up
                     </Link>
@@ -54,10 +54,10 @@ return (
         <form onSubmit={handleSubmit(login)} className='mt-8'>
             <div className='space-y-5'>
             <Input
-            label= "Email: "
-            className="ml-16"
-            placeholder= "Enter your email"
-            type= "email"
+            label="Email"
+            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-transparent transition-all duration-300"
+            placeholder="Enter your email"
+            type="email"
             {...register("email", {
                 required: true,
                 validate:{
@@ -67,8 +67,8 @@ return (
             })}
             />
             <Input
-            label="Password: "
-            className='ml-10'
+            label="Password"
+            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-transparent transition-all duration-300"
             type="password"
             placeholder="Enter your password"
             {...register("password",{
@@ -82,7 +82,7 @@ return (
             </div>
             <Button
                 type="submit"
-                className="w-full mt-8"
+                className="w-full mt-8 bg-indigo-600 hover:bg-indigo-700 text-white transition-all duration-300"
                 >Sign in</Button>
         </form>
         </div>

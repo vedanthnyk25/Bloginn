@@ -7,5 +7,7 @@ const conf = {
     tinyMceRteAPIkey: String(import.meta.env.VITE_TINYMCE_API_KEY),
 }
 
+// Debug log
+console.log('Appwrite URL:', conf.appwriteUrl);
 
 export default conf

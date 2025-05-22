@@ -124,18 +124,18 @@ export class Service{
     }
 
     async getFilePreview(fileId) {
-        
-    
         try {
-            const previewUrl = await this.bucket.getFilePreview(
+            // Instead of using getFilePreview, we'll use getFileView
+            // This returns the original file without transformations
+            const fileUrl = await this.bucket.getFileView(
                 conf.appwriteBucketId,
-                fileId,
+                fileId
             );
-            console.log(previewUrl)
-            return previewUrl;
+            return fileUrl;
         } catch (error) {
-            console.error("Error fetching file preview:", error);
-            return null; 
+            console.error("Error fetching file:", error);
+            // Return a placeholder image or null
+            return null;
         }
     }
 

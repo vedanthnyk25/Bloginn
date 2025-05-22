@@ -27,8 +27,12 @@ export default function RTE({ name, control, label, defaultValue = '' }) {
   }, []);
 
   return (
-    <div className="w-full bg-slate-200">
-      {label && <label className="inline-block mb-1 pl-1">{label}</label>}
+    <div className="w-full bg-white dark:bg-gray-800 rounded-lg shadow-md transition-all duration-300">
+      {label && (
+        <label className="inline-block mb-1 pl-1 text-gray-700 dark:text-gray-300">
+          {label}
+        </label>
+      )}
 
       <Controller
         name={name || 'content'}
@@ -54,7 +58,7 @@ export default function RTE({ name, control, label, defaultValue = '' }) {
             }
           }, [onChange]);
 
-          return <div ref={quillRef} style={{ height: '500px' }} />;
+          return <div ref={quillRef} style={{ height: '500px' }} className="rounded-lg" />;
         }}
       />
     </div>

@@ -4,47 +4,51 @@ import { Link } from 'react-router-dom';
 
 function PostCard({ $id, title, featuredImage }) {
     const [imageUrl, setImageUrl] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
 
     useEffect(() => {
-        const fetchImagePreview = async () => {
+        const fetchImage = async () => {
             if (featuredImage) {
-                const previewUrl = await appwriteService.getFilePreview(featuredImage);
-                setImageUrl(previewUrl);
+                setLoading(true);
+                try {
+                    const url = await appwriteService.getFilePreview(featuredImage);
+                    setImageUrl(url);
+                    setError(false);
+                } catch (err) {
+                    console.error("Error loading image:", err);
+                    setError(true);
+                } finally {
+                    setLoading(false);
+                }
+            } else {
+                setLoading(false);
             }
         };
 
-        fetchImagePreview();
+        fetchImage();
     }, [featuredImage]);
 
-    if (!imageUrl) {
-        // Show a loading spinner or fallback image while the image is being fetched
-        return (
-            <Link to={`/post/${$id}`}>
-                <div className="w-full bg-gray-100 rounded-xl p-4">
-                    <div className="w-full justify-center mb-4">
-                        <img
-                            src="path_to_fallback_image_or_loading_spinner.gif"
-                            alt="Loading..."
-                            className="w-full h-40 object-cover rounded-xl"
-                        />
-                    </div>
-                    <h2 className="text-2xl font-bold">{title}</h2>
-                </div>
-            </Link>
-        );
-    }
-
     return (
-        <Link to={`/post/${$id}`}>
-            <div className="w-full bg-gray-100 rounded-xl p-4">
+        <Link to={`/post/${$id}`} className="block">
+            <div className="w-full bg-white dark:bg-gray-800 rounded-xl p-4 shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
                 <div className="w-full justify-center mb-4">
-                    <img
-                        src={imageUrl} // Use the fetched image URL here
-                        alt={title}
-                        className="w-full h-40 object-cover rounded-xl"
-                    />
+                    {loading ? (
+                        <div className="w-full h-40 bg-gray-200 dark:bg-gray-700 rounded-xl animate-pulse"></div>
+                    ) : error || !imageUrl ? (
+                        <div className="w-full h-40 bg-gray-200 dark:bg-gray-700 rounded-xl flex items-center justify-center">
+                            <span className="text-gray-500 dark:text-gray-400">No image available</span>
+                        </div>
+                    ) : (
+                        <img
+                            src={imageUrl}
+                            alt={title}
+                            className="w-full h-40 object-cover rounded-xl"
+                            onError={() => setError(true)}
+                        />
+                    )}
                 </div>
-                <h2 className="text-2xl font-bold">{title}</h2>
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{title}</h2>
             </div>
         </Link>
     );
